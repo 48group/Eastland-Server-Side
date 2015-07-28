@@ -216,7 +216,7 @@ class AdminController extends Controller {
         $shops = DB::table('shops')
             ->where('shops.id' ,  '=' , $id )
             ->select('shops.id','shops.name','shops.info','shops.picture',
-                'shops.place','shops.userId','shops.phone1','shops.phone2')
+                'shops.place','shops.userId','shops.phone1','shops.phone2' , 'shops.giftCard')
             ->get();
         $shopCat = [];
         foreach($shops as $shop)
@@ -225,13 +225,12 @@ class AdminController extends Controller {
                 ->join('shop_cat' , 'cat.id' , '=' , 'shop_cat.catId')
                 ->where('shop_cat.shopId' ,  '=' , $id )
                 ->select('cat.id')->get();
-
+            $shop->category = $cat;
             $trading = DB::table('trading_hours')
-                ->join('shops' , 'trading_hours.id' , '=' , 'trading_hours.shopId')
-                ->where('shops.id' ,  '=' , $id )
+                ->join('shops' , 'trading_hours.shopId' , '=' , 'shops.id')
+                ->where('trading_hours.shopId' ,  '=' , $id )
                 ->select('trading_hours.tradingHours')
                 ->get();
-            $shop->category = $cat;
             $shop->tradingHours = $trading;
             array_push($shopCat , $shop );
         }

@@ -41,29 +41,36 @@ class ShopController extends Controller {
     public function shopByCategory($category)
     {
         $cat = DB::table('cat')
-            ->where('name' , $category)
+            ->where('name' , 'LIKE', '%'.$category.'%')
             ->select('id')->first();
-        $shop = DB::table('shops')
-            ->join('shop_cat' , 'shops.id' , '=' , 'shop_cat.shopId')
-            ->where('shop_cat.catId' , '=' , $cat->id)
-            ->select('shops.id','shops.name','shops.picture')
-            ->get();
-        foreach($shop as $s)
+        if($cat != null)
         {
-            if($s->picture)
+            $shop = DB::table('shops')
+                ->join('shop_cat' , 'shops.id' , '=' , 'shop_cat.shopId')
+                ->where('shop_cat.catId' , '=' , $cat->id)
+                ->select('shops.id','shops.name','shops.picture')
+                ->get();
+            foreach($shop as $s)
             {
-                $s->picture = '/img/shop/' . $s->picture;
+                if($s->picture)
+                {
+                    $s->picture = '/img/shop/' . $s->picture;
+                }
             }
-        }
-        $shops = [];
-        array_push($shops , $shop);
-        if($shop)
-        {
-            return response()->json($shop);
+            $shops = [];
+            array_push($shops , $shop);
+            if($shop)
+            {
+                return response()->json($shop);
+            }
+            else
+            {
+                return response()->json(['errorMessage' => 'no shop with this cat found'],404);
+            }
         }
         else
         {
-            return response()->json(['errorMessage' => ['no shop with this cat found']],404);
+            return response()->json(['errorMessage' => 'no shop with this cat found'],404);
         }
     }
 

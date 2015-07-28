@@ -13,10 +13,6 @@
 
     <!-- x editable plugins -->
 
-
-
-    <script src="js/modernizr.custom.js"></script>
-
     <!-- <link href='http://fonts.googleapis.com/css?family=Poiret+One' rel='stylesheet' type='text/css'> -->
     <link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro|Poiret+One' rel='stylesheet' type='text/css'>
     <!--Let browser know website is optimized for mobile-->

@@ -24,21 +24,8 @@
                     </div>
                     <div class="card-content">
                         <span class="card-title activator grey-text text-darken-4">{{$shops->name}}</span><br/>
-                        <span class="card-title activator grey-text text-darken-4">{{$shops->shopOwner}}</span>
-                        <?php
-                         $shopCat = DB::table('cat')
-                                 ->join('shop_cat' , 'cat.id' , '=' , 'shop_cat.catId')
-                                 ->where('shop_cat.shopId' ,  '=' , $shops->id )
-                                 ->select('cat.name')->get();
-                        ?>
-                        @if($shopCat != null)
-                            @foreach($shopCat as $shopCats)
-                                <p>{{$shopCats->name}}</p>
-                            @endforeach
-                        @else
-                            <p>No category</p>
-                        @endif
-
+                        <span class="card-title activator grey-text text-darken-4">{{$shops->shopOwner}}</span><br/>
+                        <span class="card-title activator grey-text text-darken-4">{{$shops->phone1}}</span>
                     </div>
                     <div class="card-reveal">
                         <span class="card-title grey-text text-darken-4">Description <i class="mdi-navigation-close right"></i></span>
@@ -176,7 +163,6 @@
                 <div class="input-field col m12 s12">
                     <p>Trading Hours: </p>
                     <select class="js-example-tags item-tag addShopTradingHours" multiple="multiple" name="addShopTradingHours" id="addShopTradingHours">
-                        <option value=""></option>
                     </select>
                 </div>
             </div>
@@ -399,7 +385,8 @@
                 phone2: $('input[name=addShopPhone2]').val(),
                 bestParking: $('input[name=addShopBestParking]').val(),
                 giftCard: $('select[name=addShopGiftCard]').val(),
-                place: $('input[name=addShopPlace]').val()
+                place: $('input[name=addShopPlace]').val(),
+                giftCard: $('select[name=addShopGiftCard]').val()
             }
             $.ajax({
                 type: 'POST',
@@ -431,7 +418,6 @@
             $('#addShopPhone1Error').html('');
             $('#addShopPlaceError').html('');
             $('#addShopUserIdError').html('');
-
         });
         //end add shop
 
@@ -531,7 +517,6 @@
                 dataType: 'JSON',
                 url: 'admin/getShop/' + id,
                 success: function (res) {
-                    console.log(res[0]);
                     $('#editShopName').val(res[0]['name']);
                     $('#editShopPlace').val(res[0]['place']);
                     $('#editShopInfo').val(res[0]['info']);
@@ -542,6 +527,7 @@
                     $('#editShopPhone1').val(res[0]['phone1']);
                     $('#editShopPhone2').val(res[0]['phone2']);
                     $('#editShopUserId').val(res[0]['userId']).change();
+                    $('#editShopGiftCard').val(res[0]['giftCard']).change();
                     var i = 0;
                     var temp = [];
                     $.each(res[0]['category'] , function(){
@@ -574,7 +560,9 @@
                 info: $('textarea[name=editShopInfo]').val(),
                 userId: $('select[name=editShopUserId]').val(),
                 catId: $('select[name=editShopCatId]').val(),
-                tradingHours: $('select[name=editShopTradingHours]').val()
+                tradingHours: $('select[name=editShopTradingHours]').val(),
+                giftCard : $('select[name=editShopGiftCard]').val()
+
             }
             $.ajax({
                 type: 'POST',
@@ -616,7 +604,15 @@
         $(".addShopTradingHours").select2({
             tags: true,
             tokenSeparators: [',' , ' '],
-            placeholder : 'type your trading hours'
+            placeholder : 'type your trading hours',
+            language: {
+                noResults: function() {
+                    return '';
+                }
+            },
+            escapeMarkup: function (markup) {
+                return markup;
+            }
         });
 
 
