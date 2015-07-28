@@ -124,6 +124,7 @@
                         </select>
                         <span id="editUserTypeError" class="red-text"></span>
                     </div>
+
                 </div>
                 <br>
                 <br>
