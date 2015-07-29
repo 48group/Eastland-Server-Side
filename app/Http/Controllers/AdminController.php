@@ -144,7 +144,6 @@ class AdminController extends Controller {
                 )
             ->orderBy('updated_at', 'desc')
             ->get();
-
         $cat = DB::table('cat')->select('name' , 'id')->get();
         $user = User::where('type' , '=' , 'shopOwner')->select('name' , 'id')->get();
         $trading = DB::table('shops')
@@ -250,12 +249,8 @@ class AdminController extends Controller {
             $shop->facebook = $request->facebook;
             $shop->phone1 = $request->phone1;
             $shop->phone2 = $request->phone2;
+            $shop->cat()->sync($request->catId);
             $shop->save();
-            DB::table('shop_cat')->where('shopId' , '=' , $id)->delete();
-            foreach ($request->catId as $catIds)
-            {
-                DB::table('shop_cat')->insert(['shopId' => $id , 'catId' => $catIds]);
-            }
             DB::table('trading_hours')->where('shopId' , '=' , $id)->delete();
             foreach ($request->tradingHours as $tradingHour)
             {

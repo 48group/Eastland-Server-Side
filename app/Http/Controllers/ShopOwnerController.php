@@ -96,11 +96,20 @@ class ShopOwnerController extends Controller {
             ->select
             (
                 'shops.name' , 'shops.id' , 'shops.place' , 'shops.webSite' , 'shops.phone2',
-                'shops.info' , 'shops.instagram', 'shops.phone1'
+                'shops.info' , 'shops.instagram', 'shops.phone1' , 'shops.email' , 'shops.bestParking' ,
+                'shops.giftCard'
             )
             ->first();
+        if($shop)
+        {
+            $trading = DB::table('shops')
+                ->join('trading_hours' , 'shops.id' , '=' , 'trading_hours.shopId')
+                ->where('shops.id' , '=' , $shop->id)
+                ->select('trading_hours.id' , 'trading_hours.tradingHours')
+                ->get();
+        }
         $cat = DB::table('cat')->select('name' , 'id')->get();
-        return view('shop.detail' , compact('shop' , 'cat'));
+        return view('shop.detail' , compact('shop' , 'cat' , 'trading'));
     }
 
     public function getShop($id)
@@ -110,7 +119,12 @@ class ShopOwnerController extends Controller {
             ->join('shop_cat' , 'cat.id' , '=' , 'shop_cat.catId')
             ->where('shop_cat.shopId' ,  '=' , $id )
             ->select('cat.name' , 'cat.id')->get();
-        return json_encode(array($shop , $shopCat) );
+        $trading = DB::table('trading_hours')
+            ->join('shops' , 'trading_hours.shopId' , '=' , 'shops.id')
+            ->where('trading_hours.shopId' ,  '=' , $id )
+            ->select('trading_hours.tradingHours')
+            ->get();
+        return json_encode(array($shop , $shopCat ,$trading) );
     }
 
 
@@ -125,14 +139,18 @@ class ShopOwnerController extends Controller {
             $shop->instagram = $request->instagram;
             $shop->facebook = $request->facebook;
             $shop->webSite = $request->webSite;
+            $shop->email = $request->email;
+            $shop->bestParking = $request->bestParking;
+            $shop->giftCard = $request->giftCard;
             $shop->phone1 = $request->phone1;
             $shop->phone2 = $request->phone2;
             $shop->info = $request->info;
+            $shop->cat()->sync($request->catId);
             $shop->save();
-            DB::table('shop_cat')->where('shopId' , '=' , $id)->delete();
-            foreach ($request->catId as $cat)
+            DB::table('trading_hours')->where('shopId' , '=' , $id)->delete();
+            foreach ($request->tradingHours as $tradingHour)
             {
-                DB::table('shop_cat')->insert(['shopId' => $id , 'catId' => $cat]);
+                DB::table('trading_hours')->insert(['shopId' => $id , 'tradingHours' => $tradingHour]);
             }
             DB::table('last_modifications')->truncate();
             DB::table('last_modifications')->insert(['date' => Carbon::now()]);

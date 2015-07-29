@@ -12,7 +12,7 @@ class Shop extends Model {
 
     public function cat()
     {
-        return $this->belongsToMany('App\Shop');
+        return $this->belongsToMany('App\Shop' , 'shop_cat' , 'shopId' , 'catId');
     }
 
     public function tradingHour()

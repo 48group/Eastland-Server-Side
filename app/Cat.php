@@ -12,6 +12,6 @@ class Cat extends Model {
 
     public function shop()
     {
-        return $this->belongsToMany('App\Shop');
+        return $this->belongsToMany('App\Shop' , 'shop_cat' , 'shopId' , 'catId');
     }
 }

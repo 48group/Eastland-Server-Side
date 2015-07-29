@@ -5,18 +5,12 @@
     <!--Import materialize.css-->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link type="text/css" rel="stylesheet" href="css/materialize.css"  media="screen,projection"/>
-    <link rel="stylesheet" type="text/css" href="css/component.css" />
     <link href="css/jquery-editable.css" rel="stylesheet"/>
     <link rel="stylesheet" href="css/select2.css"/>
     <link type="text/css" rel="stylesheet" href="css/custom.css" />
     <link type="text/css" rel="stylesheet" href="css/panel.css" />
     <!-- x editable plugins -->
-
-
-
-    <script src="js/modernizr.custom.js"></script>
-
-    <!-- <link href='http://fonts.googleapis.com/css?family=Poiret+One' rel='stylesheet' type='text/css'> -->
+        <!-- <link href='http://fonts.googleapis.com/css?family=Poiret+One' rel='stylesheet' type='text/css'> -->
     {{--<link href='http://fonts.googleapis.com/css?family=Source+Sans+Pro|Poiret+One' rel='stylesheet' type='text/css'>--}}
     <!--Let browser know website is optimized for mobile-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>

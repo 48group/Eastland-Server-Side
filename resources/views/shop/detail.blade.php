@@ -22,7 +22,7 @@
                             <span class="title">Social Networks</span>
                             <p>{{$shop->webSite}} <br/>
                                 {{$shop->instagram}}
-{{--                                {{$shop->email}}--}}
+                                {{$shop->email}}
                             </p>
                         </li>
                         <li class="collection-item avatar">
@@ -34,10 +34,32 @@
                         </li>
                         <li class="collection-item avatar">
                             <i class="mdi-action-description circle red"></i>
+                            <p>Best Parking <br>
+                                {{$shop->bestParking}}
+                            </p>
+                        </li>
+                        <li class="collection-item avatar">
+                            <i class="mdi-action-description circle red"></i>
+                            <p>Gift Card <br>
+                                {{$shop->giftCard}}
+                            </p>
+                        </li>
+                        <li class="collection-item avatar">
+                            <i class="mdi-action-description circle red"></i>
                             <p>Description <br>
                                 {{$shop->info}}
                             </p>
                         </li>
+                        @if($trading != null)
+                            <li class="collection-item avatar">
+                                <i class="mdi-action-description circle red"></i>
+                                <p>Trading Hours <br>
+                                    @foreach($trading as $t)
+                                        {{$t->tradingHours}}<br/>
+                                    @endforeach
+                                </p>
+                            </li>
+                        @endif
                         <li class="collection-item avatar">
                             <i class="mdi-action-description circle red"></i>
                             <?php
@@ -108,6 +130,12 @@
                     </div>
                     <div class="row">
                         <div class="input-field col m6 s12">
+                            <input value="" id="shopEmail" name="shopEmail" type="text" class="validate">
+                            <label class="active" for="shopEmail">Email</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col m6 s12">
                             <input value="" id="shopInstagram" name="shopInstagram" type="text" class="validate">
                             <label class="active" for="shopInstagram">instagram</label>
                         </div>
@@ -138,7 +166,33 @@
                             <span id="shopInfoError" class="red-text"></span>
                         </div>
                     </div>
-
+                    <div class="row">
+                        <div class="input-field col m6 s12">
+                            <input  id="editShopBestParking" name="editShopBestParking" type="text" class="validate">
+                            <label class="active" for="editShopBestParking">bestParking</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col m12 s12">
+                            <p>Trading Hours: </p>
+                            <select class="js-example-tags item-tag editShopTradingHours" multiple="multiple" name="editShopTradingHours" id="editShopTradingHours">
+                                @if($trading != null)
+                                    @foreach($trading as $t)
+                                        <option value="{{$t->tradingHours}}">{{$t->tradingHours}}</option>
+                                    @endforeach
+                                @endif
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col m12 s12">
+                            <p>giftCard: </p>
+                            <select class="js-example-tags item-tag" name="editShopGiftCard" id="editShopGiftCard">
+                                <option value="Yes">Yes</option>
+                                <option value="No">No</option>
+                            </select>
+                        </div>
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <a class="modal-action waves-effect waves-light blue darken-2 btn submit">Save</a>
@@ -175,11 +229,15 @@
                     $('#shopName').val(res[0]['name']);
                     $('#shopPlace').val(res[0]['place']);
                     $('#shopWebsite').val(res[0]['webSite']);
+                    $('#shopEmail').val(res[0]['email']);
                     $('#shopInstagram').val(res[0]['instagram']);
                     $('#shopFacebook').val(res[0]['facebook']);
                     $('#shopPhone1').val(res[0]['phone1']);
                     $('#shopPhone2').val(res[0]['phone2']);
                     $('#shopInfo').val(res[0]['info']);
+                    $('#editShopBestParking').val(res[0]['bestParking']);
+                    $('#editShopEmail').val(res[0]['email']);
+                    $('#editShopGiftCard').val(res[0]['giftCard']).change();
                     var i = 0;
                     var temp = [];
                     $.each(res[1] , function(){
@@ -187,6 +245,14 @@
                         i++;
                     });
                     $('#catId').select2('val' , temp);
+
+                    var j = 0;
+                    var trading = [];
+                    $.each(res[2] , function(){
+                        trading[j] = res[2][j]['tradingHours'];
+                        j++;
+                    });
+                    $('#editShopTradingHours').select2('val' , trading);
                 }
             });
         });
@@ -197,12 +263,16 @@
                 name: $('input[name=shopName]').val(),
                 place: $('input[name=shopPlace]').val(),
                 webSite: $('input[name=shopWebsite]').val(),
+                email: $('input[name=shopEmail]').val(),
                 instagram: $('input[name=shopInstagram]').val(),
                 facebook: $('input[name=shopFacebook]').val(),
                 phone1: $('input[name=shopPhone1]').val(),
                 phone2: $('input[name=shopPhone2]').val(),
                 info: $('textarea[name=shopInfo]').val(),
-                catId: $('select[name=catId]').val()
+                catId: $('select[name=catId]').val(),
+                bestParking: $('input[name=editShopBestParking]').val(),
+                tradingHours: $('select[name=editShopTradingHours]').val(),
+                giftCard : $('select[name=editShopGiftCard]').val()
             }
             var id = $('.editDetailBtn').attr('data-id');
             $.ajax({

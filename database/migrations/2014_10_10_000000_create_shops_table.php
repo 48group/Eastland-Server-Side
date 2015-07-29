@@ -16,20 +16,20 @@ class CreateShopsTable extends Migration {
         {
             $table->bigIncrements('id');
             $table->string('name');
-            $table->bigInteger('userId')->unsigned()->index()->nullable();
-            $table->string('webSite')->nullable();
-            $table->string('email')->nullable();
-            $table->string('instagram')->nullable();
-            $table->string('facebook')->nullable();
-            $table->string('phone1')->nullable();
-            $table->string('phone2')->nullable();
             $table->string('place');
-            $table->string('bestParking');
-            $table->string('tradingHours')->nullable();
-            $table->string('giftCard');
+            $table->string('phone1')->nullable();
             $table->text('info');
+            $table->string('giftCard');
+            $table->string('bestParking');
+            $table->string('webSite')->nullable();
+            $table->string('facebook')->nullable();
+            $table->string('instagram')->nullable();
+            $table->string('email')->nullable();
+            $table->string('phone2')->nullable();
+            $table->string('tradingHours')->nullable();
             $table->string('picture')->nullable();
             $table->string('categories')->nullable();
+            $table->bigInteger('userId')->unsigned()->index()->nullable();
             $table->timestamps();
 
             $table->foreign('userId')
