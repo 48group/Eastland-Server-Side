@@ -26,6 +26,16 @@ class ShopController extends Controller {
                 ->where('shop_cat.shopId' ,  '=' , $id )
                 ->select('cat.name')->get();
             $shop->categories = $cat;
+            $trading = DB::table('trading_hours')
+                ->where('trading_hours.shopId' ,  '=' , $id )
+                ->join('shops' , 'trading_hours.shopId' , '=' , 'shops.id')
+                ->select(
+                    'trading_hours.monday' , 'trading_hours.tuesday' , 'trading_hours.wednesday',
+                    'trading_hours.thursday' , 'trading_hours.friday' ,'trading_hours.saturday',
+                    'trading_hours.sunday'
+                )
+                ->get();
+            $shop->tradingHours = $trading;
             array_push($shopCat , $shop );
         }
         if($shops)
@@ -34,7 +44,7 @@ class ShopController extends Controller {
         }
         else
         {
-            return response()->json(['errorMessage' => ['the shop does not exist']],404);
+            return response()->json(['errorMessage' => 'the shop does not exist'],404);
         }
     }
 
@@ -56,6 +66,17 @@ class ShopController extends Controller {
                 {
                     $s->picture = '/img/shop/' . $s->picture;
                 }
+                $trading = DB::table('trading_hours')
+                    ->join('shops' , 'trading_hours.shopId' , '=' , 'shops.id')
+                    ->where('trading_hours.shopId' ,  '=' , $s->id )
+                    ->select
+                    (
+                        'trading_hours.monday' , 'trading_hours.tuesday' , 'trading_hours.wednesday',
+                        'trading_hours.thursday' , 'trading_hours.friday' ,'trading_hours.saturday',
+                        'trading_hours.sunday'
+                    )
+                    ->get();
+                $s->tradingHours = $trading;
             }
             $shops = [];
             array_push($shops , $shop);
@@ -105,7 +126,7 @@ class ShopController extends Controller {
             (
                 'shops.id' , 'shops.name' , 'shops.webSite' , 'shops.instagram',
                 'shops.facebook' , 'shops.phone1' , 'shops.phone2' , 'shops.place',
-                'shops.info' , 'shops.picture'
+                'shops.info' , 'shops.picture' , 'shops.email'
             )
             ->get();
         foreach($shops as $s)
@@ -114,6 +135,16 @@ class ShopController extends Controller {
             {
                 $s->picture = '/img/shop/' . $s->picture;
             }
+            $trading = DB::table('trading_hours')
+                ->where('trading_hours.shopId' ,  '=' , $s->id )
+                ->join('shops' , 'trading_hours.shopId' , '=' , 'shops.id')
+                ->select(
+                    'trading_hours.monday' , 'trading_hours.tuesday' , 'trading_hours.wednesday',
+                    'trading_hours.thursday' , 'trading_hours.friday' ,'trading_hours.saturday',
+                    'trading_hours.sunday'
+                )
+                ->get();
+            $s->tradingHours = $trading;
         }
         $shop = [];
         array_push($shop , $shops );

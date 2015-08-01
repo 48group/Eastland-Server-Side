@@ -15,17 +15,14 @@
                     <table class="striped">
                         <thead>
                         <tr>
-                            {{--<th data-field="id">ID</th>--}}
                             <th data-field="name">Name</th>
                             <th data-field="edit">Edit</th>
                             <th data-field="edit">Delete</th>
                         </tr>
                         </thead>
-
                         <tbody>
                         @foreach($cat as $cats)
                             <tr>
-                                {{--<td>{{$cats->id}}</td>--}}
                                 <td>{{$cats->name}}</td>
                                 <td><a href="#categoryEditModal" class="modal-trigger editCat" data-id="{{$cats->id}}"><i class="material-icons blue-text">edit</i></a></td>
                                 <td><a href="#categoryDeleteModal" class="modal-trigger deleteCat" data-id="{{$cats->id}}"><i class="material-icons red-text">delete</i></a></td>
@@ -67,8 +64,8 @@
         </div>
     </div>
     <div class="modal-footer">
-        <a href="#!" class="modal-action waves-effect waves-light blue darken-2 btn addCatSubmit">Save</a>
-        <a href="#!" class="modal-action modal-close waves-effect waves-light red darken-2 btn m-cancel-btn">Cancel</a>
+        <input type="button" value="Save" class="addCatSubmit waves-effect waves-light blue darken-2 btn"/>
+        <input type="button" value="Cancel" class="modal-close waves-effect waves-light red darken-2 btn m-cancel-btn"/>
     </div>
 </div>
 <!-- end of add item modal -->
@@ -86,8 +83,8 @@
         </div>
     </div>
     <div class="modal-footer">
-        <a href="#!" class="modal-action waves-effect waves-light blue darken-2 btn editCatSub">Save</a>
-        <a href="#!" class="modal-action modal-close waves-effect waves-light red darken-2 btn m-cancel-btn">Cancel</a>
+        <input type="button" value="Save" class="editCatSub waves-effect waves-light blue darken-2 btn"/>
+        <input type="button" value="Cancel" class="modal-close waves-effect waves-light red darken-2 btn m-cancel-btn"/>
     </div>
 </div>
 <!-- end of edit item modal -->

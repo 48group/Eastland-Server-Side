@@ -3,6 +3,7 @@
 use App\Http\Requests;
 use App\Item;
 use App\Shop;
+use App\TradingHour;
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -105,7 +106,9 @@ class ShopOwnerController extends Controller {
             $trading = DB::table('shops')
                 ->join('trading_hours' , 'shops.id' , '=' , 'trading_hours.shopId')
                 ->where('shops.id' , '=' , $shop->id)
-                ->select('trading_hours.id' , 'trading_hours.tradingHours')
+                ->select('trading_hours.monday' , 'trading_hours.tuesday' , 'trading_hours.wednesday',
+                        'trading_hours.thursday' , 'trading_hours.friday' , 'trading_hours.saturday',
+                        'trading_hours.sunday')
                 ->get();
         }
         $cat = DB::table('cat')->select('name' , 'id')->get();
@@ -120,9 +123,13 @@ class ShopOwnerController extends Controller {
             ->where('shop_cat.shopId' ,  '=' , $id )
             ->select('cat.name' , 'cat.id')->get();
         $trading = DB::table('trading_hours')
-            ->join('shops' , 'trading_hours.shopId' , '=' , 'shops.id')
             ->where('trading_hours.shopId' ,  '=' , $id )
-            ->select('trading_hours.tradingHours')
+            ->join('shops' , 'trading_hours.shopId' , '=' , 'shops.id')
+            ->select(
+                'trading_hours.monday' , 'trading_hours.tuesday' , 'trading_hours.wednesday',
+                'trading_hours.thursday' , 'trading_hours.friday' ,'trading_hours.saturday',
+                'trading_hours.sunday'
+            )
             ->get();
         return json_encode(array($shop , $shopCat ,$trading) );
     }
@@ -147,11 +154,15 @@ class ShopOwnerController extends Controller {
             $shop->info = $request->info;
             $shop->cat()->sync($request->catId);
             $shop->save();
-            DB::table('trading_hours')->where('shopId' , '=' , $id)->delete();
-            foreach ($request->tradingHours as $tradingHour)
-            {
-                DB::table('trading_hours')->insert(['shopId' => $id , 'tradingHours' => $tradingHour]);
-            }
+            TradingHour::where('shopId' , '=' , $id)->update(array(
+                'monday' => $request->monday,
+                'tuesday' => $request->tuesday,
+                'wednesday' => $request->wednesday,
+                'thursday' => $request->thursday,
+                'friday' => $request->friday,
+                'saturday' => $request->saturday,
+                'sunday' => $request->sunday,
+            ));
             DB::table('last_modifications')->truncate();
             DB::table('last_modifications')->insert(['date' => Carbon::now()]);
         }
@@ -166,7 +177,6 @@ class ShopOwnerController extends Controller {
             ->first();
         return view('shop.photos' , compact('shop'));
     }
-
 
     public function addShopImage(Requests\ImageRequest $request, $id)
     {

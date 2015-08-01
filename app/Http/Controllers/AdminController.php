@@ -5,6 +5,7 @@ use App\Event;
 use App\Http\Requests;
 use App\Phone;
 use App\Shop;
+use App\TradingHour;
 use App\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades;
@@ -146,14 +147,10 @@ class AdminController extends Controller {
             ->get();
         $cat = DB::table('cat')->select('name' , 'id')->get();
         $user = User::where('type' , '=' , 'shopOwner')->select('name' , 'id')->get();
-        $trading = DB::table('shops')
-            ->join('trading_hours' , 'shops.id' , '=' , 'trading_hours.shopId')
-            ->select('trading_hours.id' , 'trading_hours.tradingHours')
-            ->get();
-        return view('admin.shops' , compact('shop' , 'user' , 'cat' , 'trading' ));
+        return view('admin.shops' , compact('shop' , 'user' , 'cat' ));
     }
 
-    public function createShop(Requests\ShopRequest $request, Shop $shop)
+    public function createShop(Requests\ShopRequest $request)
     {
         if ($request->ajax()) {
             $id = DB::table('shops')->insertGetId([
@@ -173,10 +170,16 @@ class AdminController extends Controller {
             {
                 DB::table('shop_cat')->insert(['shopId' => $id , 'catId' => $catId]);
             }
-            foreach ($request->tradingHours as $tradingHour)
-            {
-                DB::table('trading_hours')->insert(['shopId' => $id , 'tradingHours' => $tradingHour]);
-            }
+            DB::table('trading_hours')->insert([
+                'monday' => $request->monday ,
+                'tuesday' => $request->tuesday ,
+                'wednesday' => $request->wednesday ,
+                'thursday' => $request->thursday ,
+                'friday' => $request->friday ,
+                'saturday' => $request->saturday ,
+                'sunday' => $request->sunday ,
+                'shopId' => $id,
+            ]);
             DB::table('last_modifications')->truncate();
             DB::table('last_modifications')->insert(['date' => Carbon::now()]);
         }
@@ -215,7 +218,8 @@ class AdminController extends Controller {
         $shops = DB::table('shops')
             ->where('shops.id' ,  '=' , $id )
             ->select('shops.id','shops.name','shops.info','shops.picture',
-                'shops.place','shops.userId','shops.phone1','shops.phone2' , 'shops.giftCard')
+                'shops.place','shops.userId','shops.phone1','shops.phone2' , 'shops.giftCard',
+                'shops.bestParking')
             ->get();
         $shopCat = [];
         foreach($shops as $shop)
@@ -226,14 +230,18 @@ class AdminController extends Controller {
                 ->select('cat.id')->get();
             $shop->category = $cat;
             $trading = DB::table('trading_hours')
-                ->join('shops' , 'trading_hours.shopId' , '=' , 'shops.id')
                 ->where('trading_hours.shopId' ,  '=' , $id )
-                ->select('trading_hours.tradingHours')
+                ->join('shops' , 'trading_hours.shopId' , '=' , 'shops.id')
+                ->select(
+                        'trading_hours.monday' , 'trading_hours.tuesday' , 'trading_hours.wednesday',
+                        'trading_hours.thursday' , 'trading_hours.friday' ,'trading_hours.saturday',
+                        'trading_hours.sunday'
+                        )
                 ->get();
             $shop->tradingHours = $trading;
             array_push($shopCat , $shop );
         }
-        return response()->json($shopCat);
+        return response()->json($shop);
     }
 
     public function editShop(Requests\ShopRequest $request , $id)
@@ -251,11 +259,15 @@ class AdminController extends Controller {
             $shop->phone2 = $request->phone2;
             $shop->cat()->sync($request->catId);
             $shop->save();
-            DB::table('trading_hours')->where('shopId' , '=' , $id)->delete();
-            foreach ($request->tradingHours as $tradingHour)
-            {
-                DB::table('trading_hours')->insert(['shopId' => $id , 'tradingHours' => $tradingHour]);
-            }
+            TradingHour::where('shopId' , '=' , $id)->update(array(
+                'monday' => $request->monday,
+                'tuesday' => $request->tuesday,
+                'wednesday' => $request->wednesday,
+                'thursday' => $request->thursday,
+                'friday' => $request->friday,
+                'saturday' => $request->saturday,
+                'sunday' => $request->sunday,
+            ));
             DB::table('last_modifications')->truncate();
             DB::table('last_modifications')->insert(['date' => Carbon::now()]);
         }

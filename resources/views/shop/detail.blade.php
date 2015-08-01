@@ -55,7 +55,13 @@
                                 <i class="mdi-action-description circle red"></i>
                                 <p>Trading Hours <br>
                                     @foreach($trading as $t)
-                                        {{$t->tradingHours}}<br/>
+                                        Monday: {{$t->monday}}<br/>
+                                        Tuesday: {{$t->tuesday}}<br/>
+                                        Wednesday: {{$t->wednesday}}<br/>
+                                        Thursday: {{$t->thursday}}<br/>
+                                        Friday: {{$t->friday}}<br/>
+                                        Saturday: {{$t->saturday}}<br/>
+                                        Sunday: {{$t->sunday}}<br/>
                                     @endforeach
                                 </p>
                             </li>
@@ -172,18 +178,7 @@
                             <label class="active" for="editShopBestParking">bestParking</label>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="input-field col m12 s12">
-                            <p>Trading Hours: </p>
-                            <select class="js-example-tags item-tag editShopTradingHours" multiple="multiple" name="editShopTradingHours" id="editShopTradingHours">
-                                @if($trading != null)
-                                    @foreach($trading as $t)
-                                        <option value="{{$t->tradingHours}}">{{$t->tradingHours}}</option>
-                                    @endforeach
-                                @endif
-                            </select>
-                        </div>
-                    </div>
+
                     <div class="row">
                         <div class="input-field col m12 s12">
                             <p>giftCard: </p>
@@ -193,10 +188,29 @@
                             </select>
                         </div>
                     </div>
+                    <div class="row">
+                        <div class="input-field col m6 s12">
+                            <p>Trading Hours: </p>
+                            Monday:
+                            <input type="text" name="editMonday" id="editMonday"/><br/>
+                            Tuesday:
+                            <input type="text" name="editTuesday" id="editTuesday"/><br/>
+                            Wednesday:
+                            <input type="text" name="editWednesday" id="editWednesday"/><br/>
+                            Thursday:
+                            <input type="text" name="editThursday" id="editThursday"/><br/>
+                            Friday:
+                            <input type="text" name="editFriday" id="editFriday"/><br/>
+                            Saturday:
+                            <input type="text" name="editSaturday" id="editSaturday"/><br/>
+                            Sunday:
+                            <input type="text" name="editSunday" id="editSunday"/><br/>
+                        </div>
+                    </div>
                 </div>
                 <div class="modal-footer">
-                    <a class="modal-action waves-effect waves-light blue darken-2 btn submit">Save</a>
-                    <a class="modal-action modal-close waves-effect waves-light red darken-2 btn m-cancel-btn">Cancel</a>
+                    <input type="button" value="Save" class="submit waves-effect waves-light blue darken-2 btn"/>
+                    <input type="button" value="Cancel" class="modal-close waves-effect waves-light red darken-2 btn m-cancel-btn"/>
                 </div>
 
             </div>
@@ -226,6 +240,7 @@
                 dataType: 'JSON',
                 url: 'shopOwner/getShop/' + id,
                 success: function (res) {
+                    console.log(res[2][0]);
                     $('#shopName').val(res[0]['name']);
                     $('#shopPlace').val(res[0]['place']);
                     $('#shopWebsite').val(res[0]['webSite']);
@@ -235,6 +250,13 @@
                     $('#shopPhone1').val(res[0]['phone1']);
                     $('#shopPhone2').val(res[0]['phone2']);
                     $('#shopInfo').val(res[0]['info']);
+                    $('#editMonday').val(res[2][0]['monday']);
+                    $('#editTuesday').val(res[2][0]['tuesday']);
+                    $('#editWednesday').val(res[2][0]['monday']);
+                    $('#editThursday').val(res[2][0]['wednesday']);
+                    $('#editFriday').val(res[2][0]['friday']);
+                    $('#editSaturday').val(res[2][0]['saturday']);
+                    $('#editSunday').val(res[2][0]['sunday']);
                     $('#editShopBestParking').val(res[0]['bestParking']);
                     $('#editShopEmail').val(res[0]['email']);
                     $('#editShopGiftCard').val(res[0]['giftCard']).change();
@@ -245,14 +267,6 @@
                         i++;
                     });
                     $('#catId').select2('val' , temp);
-
-                    var j = 0;
-                    var trading = [];
-                    $.each(res[2] , function(){
-                        trading[j] = res[2][j]['tradingHours'];
-                        j++;
-                    });
-                    $('#editShopTradingHours').select2('val' , trading);
                 }
             });
         });
@@ -270,6 +284,13 @@
                 phone2: $('input[name=shopPhone2]').val(),
                 info: $('textarea[name=shopInfo]').val(),
                 catId: $('select[name=catId]').val(),
+                monday: $('input[name=editMonday]').val(),
+                tuesday: $('input[name=editTuesday]').val(),
+                wednesday: $('input[name=editWednesday]').val(),
+                thursday: $('input[name=editThursday]').val(),
+                friday: $('input[name=editFirday]').val(),
+                saturday: $('input[name=editSaturday]').val(),
+                sunday: $('input[name=editSunday]').val(),
                 bestParking: $('input[name=editShopBestParking]').val(),
                 tradingHours: $('select[name=editShopTradingHours]').val(),
                 giftCard : $('select[name=editShopGiftCard]').val()

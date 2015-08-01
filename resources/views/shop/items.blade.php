@@ -93,8 +93,8 @@
             </div>
         </div>
         <div class="modal-footer">
-            <a href="#!" class="modal-action waves-effect waves-light blue darken-2 btn submit">Save</a>
-            <a href="#!" class="modal-action modal-close waves-effect waves-light red darken-2 btn m-cancel-btn">Cancel</a>
+            <input type="button" value="Save" class="submit waves-effect waves-light blue darken-2 btn"/>
+            <input type="button" value="Cancel" class="modal-close waves-effect waves-light red darken-2 btn m-cancel-btn"/>
         </div>
     </div>
 </form>
@@ -112,8 +112,8 @@
             </div>
         </div>
         <div class="modal-footer">
-            <a href="#!" class="modal-action waves-effect waves-light blue darken-2 btn addItemImage">Save</a>
-            <a href="#!" class="modal-action modal-close waves-effect waves-light red darken-2 btn m-cancel-btn">Cancel</a>
+            <input type="button" value="Save" class="addItemImage waves-effect waves-light blue darken-2 btn"/>
+            <input type="button" value="Cancel" class="modal-close waves-effect waves-light red darken-2 btn m-cancel-btn"/>
         </div>
     </div>
 </form>
@@ -175,8 +175,8 @@
             </div>
         </div>
         <div class="modal-footer">
-            <a href="#!" class="modal-action waves-effect waves-light blue darken-2 btn editItemSub">Save</a>
-            <a href="#!" class="modal-action modal-close waves-effect waves-light red darken-2 btn m-cancel-btn">Cancel</a>
+            <input type="button" value="Save" class="editItemSub waves-effect waves-light blue darken-2 btn"/>
+            <input type="button" value="Cancel" class="modal-close waves-effect waves-light red darken-2 btn m-cancel-btn"/>
         </div>
     </div>
 </form>
@@ -370,10 +370,10 @@
         //del image item
         $('.deleteImage').click(function () {
             id = $(this).attr('data-id');
-            console.log(id);
         });
         $('.deleteImageSubmit').click(function (event) {
             event.preventDefault();
+            $(this).attr('disabled', 'disabled');
             $.ajax({
                 type: 'GET',
                 url: 'shopOwner/deleteItemImage/' + id,

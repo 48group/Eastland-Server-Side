@@ -32,8 +32,8 @@
             </div>
         </div>
         <div class="modal-footer">
-            <a href="#!" class="modal-action waves-effect waves-light blue darken-2 btn addShopImage">Save</a>
-            <a href="#!" class="modal-action modal-close waves-effect waves-light red darken-2 btn m-cancel-btn">Cancel</a>
+            <input type="button" value="Save" class="addShopImage waves-effect waves-light blue darken-2 btn"/>
+            <input type="button" value="Cancel" class="modal-close waves-effect waves-light red darken-2 btn m-cancel-btn"/>
         </div>
     </div>
 </form>
@@ -112,6 +112,7 @@
     });
     $('.deleteImageSubmit').click(function (event) {
         event.preventDefault();
+        $(this).attr('disabled', 'disabled');
         $.ajax({
             type: 'GET',
             url: 'shopOwner/deleteShopImage/' + id,

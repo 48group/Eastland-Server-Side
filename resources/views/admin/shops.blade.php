@@ -75,8 +75,8 @@
             </div>
         </div>
         <div class="modal-footer">
-            <a href="#!" class="modal-action waves-effect waves-light blue darken-2 btn addShopImage">Save</a>
-            <a href="#!" class="modal-action modal-close waves-effect waves-light red darken-2 btn m-cancel-btn">Cancel</a>
+            <input type="button" value="Save" class="addShopImage waves-effect waves-light blue darken-2 btn"/>
+            <input type="button" value="Cancel" class="modal-close waves-effect waves-light red darken-2 btn m-cancel-btn"/>
         </div>
     </div>
 </form>
@@ -160,10 +160,22 @@
                 </div>
             </div>
             <div class="row">
-                <div class="input-field col m12 s12">
+                <div class="input-field col m6 s12">
                     <p>Trading Hours: </p>
-                    <select class="js-example-tags item-tag addShopTradingHours" multiple="multiple" name="addShopTradingHours" id="addShopTradingHours">
-                    </select>
+                    Monday:
+                    <input type="text" name="monday" id="monday"/><br/>
+                    Tuesday:
+                    <input type="text" name="tuesday" id="tuesday"/><br/>
+                    Wednesday:
+                    <input type="text" name="wednesday" id="wednesday"/><br/>
+                    Thursday:
+                    <input type="text" name="thursday" id="thursday"/><br/>
+                    Friday:
+                    <input type="text" name="friday" id="friday"/><br/>
+                    Saturday:
+                    <input type="text" name="saturday" id="saturday"/><br/>
+                    Sunday:
+                    <input type="text" name="sunday" id="sunday"/><br/>
                 </div>
             </div>
             <div class="row">
@@ -191,10 +203,8 @@
             </div>
         </div>
         <div class="modal-footer">
-            {{--<a href="#!" class="modal-action waves-effect waves-light blue darken-2 btn addShopBtn">Save</a>--}}
-            {{--<a href="#!" class="modal-action modal-close waves-effect waves-light red darken-2 btn m-cancel-btn">Cancel</a>--}}
-            <input type="button" value="Save" class="modal-action waves-effect waves-light blue darken-2 btn addShopBtn"/>
-            <input type="button" value="Cancel" class="modal-action modal-close waves-effect waves-light red darken-2 btn m-cancel-btn"/>
+            <input type="button" value="Save" class="addShopBtn waves-effect waves-light blue darken-2 btn"/>
+            <input type="button" value="Cancel" class="modal-close waves-effect waves-light red darken-2 btn m-cancel-btn"/>
         </div>
     </div>
 </form>
@@ -278,15 +288,22 @@
             </div>
         </div>
         <div class="row">
-            <div class="input-field col m12 s12">
+            <div class="input-field col m6 s12">
                 <p>Trading Hours: </p>
-                <select class="js-example-tags item-tag editShopTradingHours" multiple="multiple" name="editShopTradingHours" id="editShopTradingHours">
-                    @if($trading != null)
-                        @foreach($trading as $t)
-                            <option value="{{$t->tradingHours}}">{{$t->tradingHours}}</option>
-                        @endforeach
-                    @endif
-                </select>
+                Monday:
+                <input type="text" name="editMonday" id="editMonday"/><br/>
+                Tuesday:
+                <input type="text" name="editTuesday" id="editTuesday"/><br/>
+                Wednesday:
+                <input type="text" name="editWednesday" id="editWednesday"/><br/>
+                Thursday:
+                <input type="text" name="editThursday" id="editThursday"/><br/>
+                Friday:
+                <input type="text" name="editFriday" id="editFriday"/><br/>
+                Saturday:
+                <input type="text" name="editSaturday" id="editSaturday"/><br/>
+                Sunday:
+                <input type="text" name="editSunday" id="editSunday"/><br/>
             </div>
         </div>
         <div class="row">
@@ -314,8 +331,8 @@
         </div>
     </div>
     <div class="modal-footer">
-        <a href="#!" class="modal-action waves-effect waves-light blue darken-2 btn editShopSub">Save</a>
-        <a href="#!" class="modal-action modal-close waves-effect waves-light red darken-2 btn m-cancel-btn">Cancel</a>
+        <input type="button" value="Save" class="editShopSub waves-effect waves-light blue darken-2 btn"/>
+        <input type="button" value="Cancel" class="modal-close waves-effect waves-light red darken-2 btn m-cancel-btn"/>
     </div>
 </div>
 <!-- end of edit item modal -->
@@ -376,7 +393,13 @@
                 info: $('textarea[name=addShopInfo]').val(),
                 picture: $('input[name=picture]').val(),
                 catId: $('select[name=catId]').val(),
-                tradingHours : $('select[name=addShopTradingHours]').val(),
+                saturday : $('input[name=saturday]').val(),
+                sunday : $('input[name=sunday]').val(),
+                monday : $('input[name=monday]').val(),
+                tuesday : $('input[name=tuesday]').val(),
+                wednesday : $('input[name=wednesday]').val(),
+                thursday : $('input[name=thursday]').val(),
+                friday : $('input[name=friday]').val(),
                 webSite: $('input[name=addShopWebSite]').val(),
                 email: $('input[name=addShopEmail]').val(),
                 instagram: $('input[name=addShopInstagram]').val(),
@@ -490,6 +513,7 @@
         });
         $('.deleteShop').click(function (event) {
             event.preventDefault();
+            $(this).attr('disabled', 'disabled');
             $.ajax({
                 type: 'get',
                 url: 'admin/deleteShop/' + id,
@@ -517,34 +541,33 @@
                 dataType: 'JSON',
                 url: 'admin/getShop/' + id,
                 success: function (res) {
-                    $('#editShopName').val(res[0]['name']);
-                    $('#editShopPlace').val(res[0]['place']);
-                    $('#editShopInfo').val(res[0]['info']);
-                    $('#editShopWebsite').val(res[0]['webSite']);
-                    $('#editShopBestParking').val(res[0]['bestParking']);
-                    $('#editShopEmail').val(res[0]['email']);
-                    $('#editShopFacebook').val(res[0]['facebook']);
-                    $('#editShopPhone1').val(res[0]['phone1']);
-                    $('#editShopPhone2').val(res[0]['phone2']);
-                    $('#editShopUserId').val(res[0]['userId']).change();
-                    $('#editShopGiftCard').val(res[0]['giftCard']).change();
+                    $('#editShopName').val(res['name']);
+                    $('#editShopPlace').val(res['place']);
+                    $('#editShopInfo').val(res['info']);
+                    $('#editShopWebsite').val(res['webSite']);
+                    $('#editShopBestParking').val(res['bestParking']);
+                    $('#editShopEmail').val(res['email']);
+                    $('#editShopFacebook').val(res['facebook']);
+                    $('#editShopPhone1').val(res['phone1']);
+                    $('#editShopPhone2').val(res['phone2']);
+                    $('#editMonday').val(res['tradingHours'][0]['monday']);
+                    $('#editTuesday').val(res['tradingHours'][0]['tuesday']);
+                    $('#editWednesday').val(res['tradingHours'][0]['monday']);
+                    $('#editThursday').val(res['tradingHours'][0]['wednesday']);
+                    $('#editFriday').val(res['tradingHours'][0]['friday']);
+                    $('#editSaturday').val(res['tradingHours'][0]['saturday']);
+                    $('#editSunday').val(res['tradingHours'][0]['sunday']);
+                    $('#editShopUserId').val(res['userId']).change();
+                    $('#editShopGiftCard').val(res['giftCard']).change();
                     var i = 0;
                     var temp = [];
-                    $.each(res[0]['category'] , function(){
-                        temp[i] = res[0]['category'][i]['id'];
+                    $.each(res['category'] , function(){
+                        temp[i] = res['category'][i]['id'];
                         i++;
                     });
                     $('#editShopCatId').select2('val' , temp);
-
-                    var j = 0;
-                    var trading = [];
-                    $.each(res[0]['tradingHours'] , function(){
-                        trading[j] = res[0]['tradingHours'][j]['tradingHours'];
-                        j++;
-                    });
-                    $('#editShopTradingHours').select2('val' , trading);
                 }
-            })
+            });
         })
         $('.editShopSub').click(function (event) {
             event.preventDefault();
@@ -560,9 +583,14 @@
                 info: $('textarea[name=editShopInfo]').val(),
                 userId: $('select[name=editShopUserId]').val(),
                 catId: $('select[name=editShopCatId]').val(),
-                tradingHours: $('select[name=editShopTradingHours]').val(),
+                monday: $('input[name=editMonday]').val(),
+                tuesday: $('input[name=editTuesday]').val(),
+                wednesday: $('input[name=editWednesday]').val(),
+                thursday: $('input[name=editThursday]').val(),
+                friday: $('input[name=editFirday]').val(),
+                saturday: $('input[name=editSaturday]').val(),
+                sunday: $('input[name=editSunday]').val(),
                 giftCard : $('select[name=editShopGiftCard]').val()
-
             }
             $.ajax({
                 type: 'POST',
@@ -597,26 +625,6 @@
         //end edit shop
 
         $(".js-example-tags").select2({
-            tags: true,
-            tokenSeparators: [',' , ' ']
-        });
-
-        $(".addShopTradingHours").select2({
-            tags: true,
-            tokenSeparators: [',' , ' '],
-            placeholder : 'type your trading hours',
-            language: {
-                noResults: function() {
-                    return '';
-                }
-            },
-            escapeMarkup: function (markup) {
-                return markup;
-            }
-        });
-
-
-        $(".catId").select2({
             tags: true,
             tokenSeparators: [',' , ' '],
             placeholder : 'choose category'

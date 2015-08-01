@@ -88,8 +88,8 @@
             <br>
         </div>
         <div class="modal-footer">
-            <a href="#!" class="modal-action waves-effect waves-light blue darken-2 btn addUserBtn">Save</a>
-            <a href="#!" class="modal-action modal-close waves-effect waves-light red darken-2 btn m-cancel-btn">Cancel</a>
+            <input type="button" value="Save" class="addUserBtn waves-effect waves-light blue darken-2 btn"/>
+            <input type="button" value="Cancel" class="modal-close waves-effect waves-light red darken-2 btn m-cancel-btn"/>
         </div>
     </div>
 
@@ -131,8 +131,8 @@
                 <br>
             </div>
             <div class="modal-footer">
-                <a href="#!" class="modal-action waves-effect waves-light blue darken-2 btn editUserSub">Save</a>
-                <a href="#!" class="modal-action modal-close waves-effect waves-light red darken-2 btn m-cancel-btn">Cancel</a>
+                <input type="button" value="Save" class="editUserSub waves-effect waves-light blue darken-2 btn"/>
+                <input type="button" value="Cancel" class="modal-close waves-effect waves-light red darken-2 btn m-cancel-btn"/>
             </div>
         </div>
 
@@ -171,8 +171,8 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <a href="#!" class="modal-action waves-effect waves-light blue darken-2 btn editPassSub">Save</a>
-                <a href="#!" class="modal-action modal-close waves-effect waves-light red darken-2 btn m-cancel-btn">Cancel</a>
+                <input type="button" value="Save" class="editPassSub waves-effect waves-light blue darken-2 btn"/>
+                <input type="button" value="Cancel" class="modal-close waves-effect waves-light red darken-2 btn m-cancel-btn"/>
             </div>
         </div>
     </form>
@@ -247,7 +247,6 @@
                 Materialize.toast('User has been added!', 4000);
                 var href = $('#usersHref').attr('href');
                 $('.wrap').load(href);
-                return false;
             }
         });
         $('#addUserNameError').html('');
@@ -301,6 +300,7 @@
                         $('#editUserTypeError').html(errors['type']);
                     });
                 }
+                $(this).attr('disabled', false);
                 return false;
             },
             success: function ()
@@ -308,7 +308,6 @@
                 Materialize.toast('The user has been edited', 4000);
                 var href = $('#usersHref').attr('href');
                 $('.wrap').load(href);
-                return false;
             }
         });
         $('#editUserNameError').html('');
@@ -363,6 +362,7 @@
     });
     $('.deleteUserSubmit').click( function(event){
         event.preventDefault();
+        $(this).attr('disabled', 'disabled');
         $.ajax({
             type: 'get',
             url: 'admin/deleteUser/'+ id ,

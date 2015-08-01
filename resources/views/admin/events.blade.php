@@ -140,8 +140,8 @@
 
     </div>
     <div class="modal-footer">
-        <a href="#!" class="modal-action waves-effect waves-light blue darken-2 btn submit">Save</a>
-        <a href="#!" class="modal-action modal-close waves-effect waves-light red darken-2 btn m-cancel-btn">Cancel</a>
+        <input type="button" value="Save" class="submit waves-effect waves-light blue darken-2 btn"/>
+        <input type="button" value="Cancel" class="modal-close waves-effect waves-light red darken-2 btn m-cancel-btn"/>
     </div>
 </div>
 <!-- end of add item modal -->
@@ -232,8 +232,9 @@
         </div>
     </div>
     <div class="modal-footer">
-        <a href="#!" class="modal-action waves-effect waves-light blue darken-2 btn editEventSub">Save</a>
-        <a href="#!" class="modal-action modal-close waves-effect waves-light red darken-2 btn m-cancel-btn">Cancel</a>
+        <input type="button" value="Save" class="editEventSub waves-effect waves-light blue darken-2 btn"/>
+        <input type="button" value="Cancel" class="modal-close waves-effect waves-light red darken-2 btn m-cancel-btn"/>
+
     </div>
 </div>
 <!-- end of sale edit modal -->
@@ -250,8 +251,8 @@
             </div>
         </div>
         <div class="modal-footer">
-            <a href="#!" class="modal-action waves-effect waves-light blue darken-2 btn addEventImage">Save</a>
-            <a href="#!" class="modal-action modal-close waves-effect waves-light red darken-2 btn m-cancel-btn">Cancel</a>
+            <input type="button" value="Save" class="addEventImage waves-effect waves-light blue darken-2 btn"/>
+            <input type="button" value="Cancel" class="modal-close waves-effect waves-light red darken-2 btn m-cancel-btn"/>
         </div>
     </div>
 </form>
@@ -298,6 +299,7 @@
                 category: $('select[name=addEventCat]').val(),
                 place: $('input[name=addEventPlace]').val()
             }
+            $(this).attr('disabled', 'disabled');
             $.ajax({
                 type: 'POST',
                 url: 'admin/createEvent',
@@ -344,6 +346,7 @@
         $('.addEventImage').click(function (e) {
             e.preventDefault();
             var formData = new FormData($('#addEventImageForm')[0]);
+            $(this).attr('disabled', 'disabled');
             $.ajax({
                 type: 'POST',
                 data: formData,
@@ -379,8 +382,8 @@
             id = $(this).attr('data-id');
         });
         $('.deleteImageSub').click(function (event) {
-            console.log(id);
             event.preventDefault();
+            $(this).attr('disabled', 'disabled');
             $.ajax({
                 type: 'GET',
                 url: 'admin/deleteEventImage/' + id,
@@ -448,6 +451,7 @@
                 category: $('select[name=editEventCat]').val(),
                 place: $('input[name=editEventPlace]').val()
             }
+            $(this).attr('disabled', 'disabled');
             $.ajax({
                 type: 'POST',
                 url: 'admin/editEvent/' + id,
@@ -490,10 +494,10 @@
         //del event
         $('.deleteEvent').click(function () {
             id = $(this).attr('data-id');
-            console.log(id);
         });
         $('.deleteEventSub').click(function (event) {
             event.preventDefault();
+            $(this).attr('disabled', 'disabled');
             $.ajax({
                 type: 'get',
                 url: 'admin/deleteEvent/' + id,

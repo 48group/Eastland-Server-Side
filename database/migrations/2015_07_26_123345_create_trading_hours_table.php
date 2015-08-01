@@ -15,7 +15,13 @@ class CreateTradingHoursTable extends Migration {
 		Schema::create('trading_hours', function(Blueprint $table)
 		{
 			$table->bigIncrements('id');
-            $table->string('tradingHours');
+            $table->string('monday');
+            $table->string('tuesday');
+            $table->string('wednesday');
+            $table->string('thursday');
+            $table->string('friday');
+            $table->string('saturday');
+            $table->string('sunday');
             $table->bigInteger('shopId')->unsigned()->index();
             $table->timestamps();
 

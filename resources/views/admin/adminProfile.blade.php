@@ -49,8 +49,8 @@
         <br>
     </div>
     <div class="modal-footer">
-        <a href="#!" class="modal-action waves-effect waves-light blue darken-2 btn editUserSub">Save</a>
-        <a href="#!" class="modal-action modal-close waves-effect waves-light red darken-2 btn m-cancel-btn">Cancel</a>
+        <input type="button" value="Save" class="editUserSub waves-effect waves-light blue darken-2 btn"/>
+        <input type="button" value="Cancel" class="modal-close waves-effect waves-light red darken-2 btn m-cancel-btn"/>
     </div>
 </div>
 
@@ -83,8 +83,8 @@
             </div>
         </div>
         <div class="modal-footer">
-            <a href="#!" class="modal-action waves-effect waves-light blue darken-2 btn editPassSub">Save</a>
-            <a href="#!" class="modal-action modal-close waves-effect waves-light red darken-2 btn m-cancel-btn">Cancel</a>
+            <input type="button" value="Save" class="editPassSub waves-effect waves-light blue darken-2 btn"/>
+            <input type="button" value="Cancel" class="modal-close waves-effect waves-light red darken-2 btn m-cancel-btn"/>
         </div>
     </div>
 </form>
