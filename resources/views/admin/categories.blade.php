@@ -120,6 +120,7 @@
         $('.modal-trigger').leanModal();
 
 
+
         //add Cat
         $('.addCatSubmit').click( function(event){
             event.preventDefault();
@@ -148,6 +149,12 @@
                     $('.wrap').load(href);
                     return false;
                 }
+
+            }).done(function(data){
+                $('.addCatSubmit').attr("disabled", "disabled");
+            })
+            .fail(function() {
+                $('.addCatSubmit').removeAttr("disabled");
             });
             $('#addCatNameError').html('');
         });
@@ -191,8 +198,12 @@
                     Materialize.toast('The Category has been edited', 4000);
                     var href = $('#categoriesHref').attr('href');
                     $('.wrap').load(href);
-                    return false;
                 }
+            }).done(function(){
+                $('.editCatSub').attr("disabled", "disabled");
+            })
+            .fail(function() {
+                $('.editCatSub').removeAttr("disabled");
             });
             $('#editCatNameError').html('');
         });
@@ -214,7 +225,12 @@
                     $('.wrap').load(href);
                     return false;
                 }
+            }).done(function(){
+                $('.deleteCatSubmit').attr("disabled", "disabled");
             })
+            .fail(function() {
+                $('.deleteCatSubmit').removeAttr("disabled");
+            });
         });
         //end del cat
     })

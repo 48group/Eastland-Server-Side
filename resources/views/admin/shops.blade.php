@@ -434,7 +434,12 @@
                     $('.wrap').load(href);
                     return false;
                 }
+            }).done(function(){
+                $('.addShopBtn').attr("disabled", "disabled");
             })
+            .fail(function() {
+                $('.addShopBtn').removeAttr("disabled");
+            });
             $('#addShopNameError').html('');
             $('#addUserIdError').html('');
             $('#addShopCatIdError').html('');
@@ -476,7 +481,12 @@
                     $('.wrap').load(href);
                     return false;
                 }
+            }).done(function(){
+                $('.addShopImage').attr("disabled", "disabled");
             })
+            .fail(function() {
+                $('.addShopImage').removeAttr("disabled");
+            });
         });
         //end add shop image
 
@@ -501,7 +511,12 @@
                     $('.wrap').load(href);
                     return false;
                 }
+            }).done(function(){
+                $('.deleteImageSubmit').attr("disabled", "disabled");
             })
+            .fail(function() {
+                $('.deleteImageSubmit').removeAttr("disabled");
+            });
             //end del image shop
 
         });
@@ -527,7 +542,12 @@
                     var href = $('#shopsHref').attr('href');
                     $('.wrap').load(href);
                 }
+            }).done(function(){
+                $('.deleteShop').attr("disabled", "disabled");
             })
+            .fail(function() {
+                $('.deleteShop').removeAttr("disabled");
+            });
             return false;
         });
 //        end del shop
@@ -615,7 +635,12 @@
                     $('.wrap').load(href);
                     return false;
                 }
+            }).done(function(){
+                $('.editShopSub').attr("disabled", "disabled");
             })
+            .fail(function() {
+                $('.editShopSub').removeAttr("disabled");
+            });
             $('#editShopNameError').html('');
             $('#editShopUserIdError').html('');
             $('#editShopCatIdError').html('');

@@ -214,6 +214,11 @@
                     $('.wrap').load(href);
                     return false;
                 }
+            }).done(function(){
+                $('.submit').attr("disabled", "disabled");
+            })
+            .fail(function() {
+                $('.submit').removeAttr("disabled");
             });
             $('#saleNameError').html('');
             $('#salePlaceError').html('');
@@ -296,6 +301,11 @@
                     $('.wrap').load(href);
                     return false;
                 }
+            }).done(function(){
+                $('.editSaleSub').attr("disabled", "disabled");
+            })
+            .fail(function() {
+                $('.editSaleSub').removeAttr("disabled");
             });
             $('#editSaleNameError').html('');
             $('#editSalePlaceError').html('');
@@ -326,7 +336,12 @@
                     var href = $('#saleHref').attr('href');
                     $('.wrap').load(href);
                 }
+            }).done(function(){
+                $('.deleteSale').attr("disabled", "disabled");
             })
+            .fail(function() {
+                $('.deleteSale').removeAttr("disabled");
+            });
             return false;
         });
     //end del sale

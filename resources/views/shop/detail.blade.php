@@ -268,7 +268,7 @@
                     });
                     $('#catId').select2('val' , temp);
                 }
-            });
+            })
         });
 
         $('.submit').click( function(event){
@@ -323,6 +323,11 @@
                     $('.wrap').load(href);
                     return false;
                 }
+            }).done(function(){
+                $('.submit').attr("disabled", "disabled");
+            })
+            .fail(function() {
+                $('.submit').removeAttr("disabled");
             });
             $('#shopNameError').html('');
             $('#shopPlaceError').html('');

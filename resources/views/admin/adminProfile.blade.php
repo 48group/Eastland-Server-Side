@@ -150,8 +150,12 @@
                 Materialize.toast('The Admin user has been edited', 4000);
                 var href = $('#adminProfileHref').attr('href');
                 $('.wrap').load(href);
-                return false;
             }
+        }).done(function(){
+            $('.editUserSub').attr("disabled", "disabled");
+        })
+        .fail(function() {
+            $('.editUserSub').removeAttr("disabled");
         });
         $('#editUserNameError').html('');
         $('#editUserEmailError').html('');
@@ -193,8 +197,12 @@
                 Materialize.toast('The password has been changed', 4000);
                 var href = $('#adminProfileHref').attr('href');
                 $('.wrap').load(href);
-                return false;
             }
+        }).done(function(){
+            $('.editPassSub').attr("disabled", "disabled");
+        })
+        .fail(function() {
+            $('.editPassSub').removeAttr("disabled");
         });
         $('#editUserNewPasswordError').html('');
         $('#editUserOldPasswordError').html('');

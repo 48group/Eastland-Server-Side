@@ -153,6 +153,11 @@
                 $('.wrap').load(href);
                 return false;
             }
+        }).done(function(){
+            $('.editUserSub').attr("disabled", "disabled");
+        })
+        .fail(function() {
+            $('.editUserSub').removeAttr("disabled");
         });
         $('#editUserNameError').html('');
         $('#editUserEmailError').html('');
@@ -196,6 +201,11 @@
                 $('.wrap').load(href);
                 return false;
             }
+        }).done(function(){
+            $('.editPassSub').attr("disabled", "disabled");
+        })
+        .fail(function() {
+            $('.editPassSub').removeAttr("disabled");
         });
         $('#editUserNewPasswordError').html('');
         $('#editUserOldPasswordError').html('');

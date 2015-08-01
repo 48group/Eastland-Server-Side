@@ -109,7 +109,12 @@
                 $('.wrap').load(href);
                 return false;
             }
+        }).done(function(){
+            $('.addSaleImage').attr("disabled", "disabled");
         })
+        .fail(function() {
+            $('.addSaleImage').removeAttr("disabled");
+        });
     });
     //end add shop image
 
@@ -135,7 +140,12 @@
                 $('.wrap').load(href);
                 return false;
             }
+        }).done(function(){
+            $('.deleteImageSubmit').attr("disabled", "disabled");
         })
+        .fail(function() {
+            $('.deleteImageSubmit').removeAttr("disabled");
+        });
         //end del image shop
 
     });

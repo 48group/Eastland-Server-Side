@@ -24,14 +24,12 @@ class ItemRequest extends Request {
 		return [
             'name' => 'required',
             'price' => 'required|numeric',
-            'picture' => 'required|image|mimes:jpeg,jpg,bmp,png,gif|max:200'
 		];
 	}
     public function messages()
     {
         return [
             'name.required' => 'The Item Name field is required',
-            'picture.required' => 'You should choose an image',
         ];
     }
 

@@ -237,6 +237,11 @@
                     $('.wrap').load(href);
                     return false;
                 }
+            }).done(function(){
+                $('.submit').attr("disabled", "disabled");
+            })
+            .fail(function() {
+                $('.submit').removeAttr("disabled");
             });
             $('#itemNameError').html('')
             $('#itemInfoError').html('')
@@ -293,6 +298,11 @@
                 $('.wrap').load(href);
                 return false;
             }
+        }).done(function(){
+            $('.editItemSub').attr("disabled", "disabled");
+        })
+        .fail(function() {
+            $('.editItemSub').removeAttr("disabled");
         });
         $('#editItemNameError').html('')
         $('#editItemInfoError').html('')
@@ -321,7 +331,12 @@
                 var href = $('#itemsHref').attr('href');
                 $('.wrap').load(href);
             }
+        }).done(function(){
+            $('.deleteItem').attr("disabled", "disabled");
         })
+        .fail(function() {
+            $('.deleteItem').removeAttr("disabled");
+        });
         return false;
     });
     //end del sale
@@ -360,6 +375,11 @@
                     $('.wrap').load(href);
                     return false;
                 }
+            }).done(function(){
+                $('.addItemImage').attr("disabled", "disabled");
+            })
+            .fail(function() {
+                $('.addItemImage').removeAttr("disabled");
             });
             $('#addItemImageError').html('');
         });
@@ -388,7 +408,12 @@
                     $('.wrap').load(href);
                     return false;
                 }
+            }).done(function(){
+                $('.deleteImageSubmit').attr("disabled", "disabled");
             })
+            .fail(function() {
+                $('.deleteImageSubmit').removeAttr("disabled");
+            });
             //end del image shop
 
         });

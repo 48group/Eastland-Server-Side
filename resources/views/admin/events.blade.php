@@ -299,7 +299,6 @@
                 category: $('select[name=addEventCat]').val(),
                 place: $('input[name=addEventPlace]').val()
             }
-            $(this).attr('disabled', 'disabled');
             $.ajax({
                 type: 'POST',
                 url: 'admin/createEvent',
@@ -327,6 +326,11 @@
                     $('.wrap').load(href);
                     return false;
                 }
+            }).done(function(){
+                $('.submit').attr("disabled", "disabled");
+            })
+            .fail(function() {
+                $('.submit').removeAttr("disabled");
             });
             $('#addEventNameError').html('');
             $('#addEventPlaceError').html('');
@@ -346,7 +350,6 @@
         $('.addEventImage').click(function (e) {
             e.preventDefault();
             var formData = new FormData($('#addEventImageForm')[0]);
-            $(this).attr('disabled', 'disabled');
             $.ajax({
                 type: 'POST',
                 data: formData,
@@ -371,6 +374,11 @@
                     $('.wrap').load(href);
                     return false;
                 }
+            }).done(function(){
+                $('.addEventImage').attr("disabled", "disabled");
+            })
+            .fail(function() {
+                $('.addEventImage').removeAttr("disabled");
             });
             $('#addEventImageError').html('');
         });
@@ -383,7 +391,6 @@
         });
         $('.deleteImageSub').click(function (event) {
             event.preventDefault();
-            $(this).attr('disabled', 'disabled');
             $.ajax({
                 type: 'GET',
                 url: 'admin/deleteEventImage/' + id,
@@ -398,6 +405,11 @@
                     $('.wrap').load(href);
                     return false;
                 }
+            }).done(function(){
+                $('.deleteImageSub').attr("disabled", "disabled");
+            })
+            .fail(function() {
+                $('.deleteImageSub').removeAttr("disabled");
             });
         });
         //end del event image
@@ -451,7 +463,6 @@
                 category: $('select[name=editEventCat]').val(),
                 place: $('input[name=editEventPlace]').val()
             }
-            $(this).attr('disabled', 'disabled');
             $.ajax({
                 type: 'POST',
                 url: 'admin/editEvent/' + id,
@@ -479,6 +490,11 @@
                     $('.wrap').load(href);
                     return false;
                 }
+            }).done(function(){
+                $('.editEventSub').attr("disabled", "disabled");
+            })
+            .fail(function() {
+                $('.editEventSub').removeAttr("disabled");
             });
             $('#editEventNameError').html('');
             $('#editEventPlaceError').html('');
@@ -497,7 +513,6 @@
         });
         $('.deleteEventSub').click(function (event) {
             event.preventDefault();
-            $(this).attr('disabled', 'disabled');
             $.ajax({
                 type: 'get',
                 url: 'admin/deleteEvent/' + id,
@@ -512,7 +527,12 @@
                     $('.wrap').load(href);
                     return false;
                 }
+            }).done(function(){
+                $('.deleteEventSub').attr("disabled", "disabled");
             })
+            .fail(function() {
+                $('.deleteEventSub').removeAttr("disabled");
+            });
         });
     });
     //end del event

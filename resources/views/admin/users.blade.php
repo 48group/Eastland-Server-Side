@@ -248,6 +248,11 @@
                 var href = $('#usersHref').attr('href');
                 $('.wrap').load(href);
             }
+        }).done(function(){
+            $('.addUserBtn').attr("disabled", "disabled");
+        })
+        .fail(function() {
+            $('.addUserBtn').removeAttr("disabled");
         });
         $('#addUserNameError').html('');
         $('#addUserPasswordError').html('');
@@ -309,6 +314,11 @@
                 var href = $('#usersHref').attr('href');
                 $('.wrap').load(href);
             }
+        }).done(function(){
+            $('.editUserSub').attr("disabled", "disabled");
+        })
+        .fail(function() {
+            $('.editUserSub').removeAttr("disabled");
         });
         $('#editUserNameError').html('');
         $('#editUserEmailError').html('');
@@ -349,6 +359,11 @@
                 $('.wrap').load(href);
                 return false;
             }
+        }).done(function(){
+            $('.editPassSub').attr("disabled", "disabled");
+        })
+        .fail(function() {
+            $('.editPassSub').removeAttr("disabled");
         });
         $('#editUserNewPasswordError').html('');
     });
@@ -362,7 +377,6 @@
     });
     $('.deleteUserSubmit').click( function(event){
         event.preventDefault();
-        $(this).attr('disabled', 'disabled');
         $.ajax({
             type: 'get',
             url: 'admin/deleteUser/'+ id ,
@@ -379,7 +393,12 @@
                 $('.wrap').load(href);
                 return false;
             }
+        }).done(function(){
+            $('.deleteUserSubmit').attr("disabled", "disabled");
         })
+        .fail(function() {
+            $('.deleteUserSubmit').removeAttr("disabled");
+        });
     });
     //end del user
 
